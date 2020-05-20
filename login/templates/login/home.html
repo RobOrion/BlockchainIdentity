@@ -1,0 +1,41 @@
+{% extends 'login/base.html' %}
+{% load static %}
+
+{% block body %}
+    {% if message == 'error' %}
+        <div class="container mt-3 text-center">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Identifiants incorrects !</strong> Merci de vérifier les informations saisies.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    {% endif %}
+
+     {% if message == 'logout' %}
+        <div class="container mt-3 text-center">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Déconnexion réussie !</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    {% endif %}
+    <div class="form" style="margin-bottom: 50px">
+        <div class="thumbnail"><img src="{% static 'images/statistics.svg' %}"></div>
+        {% if error %}
+            <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
+        {% endif %}
+
+
+        <form method="post" action="{% url 'login:process' %}">
+            {% csrf_token %}
+            <input id="id_username" type="text" name="username" placeholder="Nom d'utilisateur"/>
+            <input id="id_password" type="password" name="password" placeholder="Mot de passe"/>
+            <button type="submit">Connexion</button>
+        </form>
+    </div>
+
+{% endblock %}

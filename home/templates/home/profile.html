@@ -1,0 +1,180 @@
+{% extends 'home/base_connected.html' %}
+{% load static %}
+
+{% block body %}
+    <div class="m-3">
+        <div class="jumbotron">
+            <h1 class="display-4">Bonjour {{ user.first_name }} {{ user.last_name }}</h1>
+            <p class="lead">Bienvenue sur votre espace personnel, vous pouvez voir vos infos et les modifier.</p>
+            <hr class="my-4">
+            <div class="">
+                <div class="row mb-4">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Informations personnelles </h5>
+                                <b>Prénom</b> : {{ user.first_name }} <br>
+                                <b>Nom</b> : {{ user.last_name }} <br>
+                                <b>Mail</b> : {{ user.email }} <br>
+                                <b>Groupe</b> : {{ user.groups.all.0 }} <br>
+                                <b>Dernière connection</b> : {{ user.last_login }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Permissions actuelles</h5>
+                                <i><p class="card-text">Voici les permissions auxquelles vous avez accès </p></i>
+                                <br>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="list-group" id="list-tab" role="tablist">
+                                            <a class="list-group-item list-group-item-action active" id="list-home-list"
+                                               data-toggle="list" href="#list-home" role="tab"
+                                               aria-controls="home">Accès aux Vms</a>
+                                            <a class="list-group-item list-group-item-action" id="list-profile-list"
+                                               data-toggle="list" href="#list-profile" role="tab"
+                                               aria-controls="profile">Lecture des fichiers</a>
+                                            {% if  user.groups.all.0|stringformat:"s" == 'admin' %}
+                                                <a class="list-group-item list-group-item-action"
+                                                   id="list-messages-list"
+                                                   data-toggle="list" href="#list-messages" role="tab"
+                                                   aria-controls="messages">Création de permission</a>
+                                            {% endif %}
+                                            {% if  user.groups.all.0|stringformat:"s" == 'super_user' %}
+                                                <a class="list-group-item list-group-item-action"
+                                                   id="list-messages-list"
+                                                   data-toggle="list" href="#list-messages" role="tab"
+                                                   aria-controls="messages">Création de permission</a>
+                                            {% endif %}
+                                            {% if  user.groups.all.0|stringformat:"s" == 'admin' %}
+                                                <a class="list-group-item list-group-item-action"
+                                                   id="list-settings-list"
+                                                   data-toggle="list" href="#list-settings" role="tab"
+                                                   aria-controls="settings">Suppression de tout types d'utilisateurs</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="tab-content" id="nav-tabContent">
+                                            <div class="tab-pane fade show active" id="list-home" role="tabpanel"
+                                                 aria-labelledby="list-home-list">
+                                                Vous avez accès aux machines virtuel sur le <span
+                                                    style="font-weight: bold">VLAN 2</span>, <span
+                                                    style="font-weight: bold">VLAN1.</span> <br>
+                                                Vous avez reçu les iditenfiants sur votre boite mail personnelle.
+                                            </div>
+                                            <div class="tab-pane fade" id="list-profile" role="tabpanel"
+                                                 aria-labelledby="list-profile-list">
+                                                Vous avez la possibilité de supprimer, modifier et créer tous les
+                                                fichiers sur le SharePoint de votre projet Actuel : <b>XSpace</b>
+                                            </div>
+                                            {% if  user.groups.all.0|stringformat:"s" == 'admin' %}
+                                                <div class="tab-pane fade" id="list-messages" role="tabpanel"
+                                                     aria-labelledby="list-messages-list">Vous avez le
+                                                    role <b>{{ user.groups.all.0 }}</b> et vous pouvez modifier les
+                                                    permissions
+                                                    de tous les utilisateurs.
+                                                </div>
+                                            {% endif %}
+                                            {% if  user.groups.all.0|stringformat:"s" == 'super_user' %}
+                                                <div class="tab-pane fade" id="list-messages" role="tabpanel"
+                                                     aria-labelledby="list-messages-list">Vous avez le
+                                                    role <b>{{ user.groups.all.0 }}</b> et vous pouvez modifier les
+                                                    permissions
+                                                    de utilisateurs dont vous avez la supervision.
+                                                </div>
+                                            {% endif %}
+                                            {% if  user.groups.all.0|stringformat:"s" == 'admin' %}
+                                                <div class="tab-pane fade" id="list-settings" role="tabpanel"
+                                                     aria-labelledby="list-settings-list">
+                                                    Vous pouvez modifier les infomations, créer ou supprimer tous les
+                                                    informations liées aux utilisateurs de l'entreprise.
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Demande de permission prédéfinie</h5>
+                                <i><p class="card-text">Vous pouvez faire une demande de <b>permission prédéfinie</b>
+                                    via le formulaire
+                                    ci-dessous </p></i>
+                                <br>
+                                <form method="post" action="permpre">
+                                    {% csrf_token %}
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">Utilisateur</label>
+                                            <select id="inputState" class="form-control" name="user">
+                                                <option>Antoine Branson</option>
+                                                <option>Florin Gogibus</option>
+                                                <option>Quentin Cucci</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">Permission</label>
+                                            <select id="inputState" class="form-control" name="permission_pre">
+                                                <option selected>Acces au VM</option>
+                                                <option>Lecture de Fichier</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12 text-center">
+                                        <button type="submit" class="btn btn-primary">Faire la demande</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Demande de permission personnalisée</h5>
+                                <i><p class="card-text">Vous pouvez faire une demande de <b>permission personalisée</b>
+                                    via le formulaire
+                                    ci-dessous </p></i>
+                                <br>
+                                <form method="post" action="permperso">
+                                    {% csrf_token %}
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">Utilisateur</label>
+                                            <select id="inputState" class="form-control" name="user">
+                                                <option>Antoine Branson</option>
+                                                <option>Florin Gogibus</option>
+                                                <option>Quentin Cucci</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">Permission</label>
+                                            <textarea class="form-control" id="text_area" name="permission_perso"
+                                                      rows="1"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12 text-center">
+                                        <button type="submit" class="btn btn-primary">Faire la demande</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
