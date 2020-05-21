@@ -19,16 +19,27 @@ class Blockchain:
 
     def forge(self, prev_hash: Optional[str], curr_hash: Optional[str]):
         # noinspection PyDictCreation
-        bloc = {
+        block = {
             'previous_hash': prev_hash or self.previous_block['current_hash'],
             'current_hash': '',
             'timestamp': int(time()),
+            'members': [
+                {
+                    'lastname': 'Chatelet',
+                    'firstname': 'Robin',
+                    'email': 'chateletro@eisti.eu',
+                    'rights': [
+                        'accès à tous les fichiers',
+                        'accès à toutes les vms'
+                    ]
+                }
+            ],
             'transactions': self.mempool[:]
         }
 
-        bloc['current_hash'] = curr_hash or self.hash(bloc)
+        block['current_hash'] = curr_hash or self.hash(block)
 
-        self.blocs.append(bloc)
+        self.blocs.append(block)
 
     def new_transaction(self, sender: str, content: dict):
         if self.authority is not None:
@@ -66,6 +77,26 @@ class Blockchain:
                 changed = True
 
         return changed
+
+    def create_id(self, name, firstname, email):
+        return self.forge(prev_hash=None, curr_hash=None)['members'].append({
+            'lastname': name,
+            'firstname': firstname,
+            'email': email,
+            'rights': []
+        })
+
+    def insert_rights(self, rights, name, firstname, email):
+        for p in self.forge(prev_hash=None, curr_hash=None)['members'] :
+            if self.forge(prev_hash=None, curr_hash=None)['members']['name'] == name & self.forge(prev_hash=None, curr_hash=None)['members']['firstname'] == firstname & self.forge(prev_hash=None, curr_hash=None)['members']['email'] == email:
+                return self.forge(prev_hash=None, curr_hash=None)['members'].append({
+                    'rights': [rights]
+                })
+
+    def delete_id(self, name, firstname, email):
+        for p in self.forge(prev_hash=None, curr_hash=None)['members']:
+            if self.forge(prev_hash=None, curr_hash=None)['members']['name'] == name & self.forge(prev_hash=None, curr_hash=None)['members']['firstname'] == firstname & self.forge(prev_hash=None, curr_hash=None)['members']['email'] == email:
+                return self.forge(prev_hash=None, curr_hash=None)['members'].pop
 
     @property
     def previous_block(self) -> dict:
