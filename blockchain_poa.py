@@ -25,13 +25,10 @@ class Blockchain:
             'timestamp': int(time()),
             'members': [
                 {
-                    'lastname': 'Chatelet',
-                    'firstname': 'Robin',
-                    'email': 'chateletro@eisti.eu',
-                    'rights': [
-                        'accès à tous les fichiers',
-                        'accès à toutes les vms'
-                    ]
+                    'lastname': '',
+                    'firstname': '',
+                    'email': '',
+                    'rights': []
                 }
             ],
             'transactions': self.mempool[:]
