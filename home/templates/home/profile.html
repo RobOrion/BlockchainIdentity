@@ -5,7 +5,7 @@
     <div class="m-3">
         <div class="jumbotron">
             <h1 class="display-4">Bonjour {{ user.first_name }} {{ user.last_name }}</h1>
-            <p class="lead">Bienvenue sur votre espace personnel, vous pouvez voir vos infos et les modifier.</p>
+            <p class="lead">Bienvenu sur votre espace personnel, vous pouvez voir vos infos et les modifier.</p>
             <hr class="my-4">
             <div class="">
                 <div class="row mb-4">
@@ -17,7 +17,7 @@
                                 <b>Nom</b> : {{ user.last_name }} <br>
                                 <b>Mail</b> : {{ user.email }} <br>
                                 <b>Groupe</b> : {{ user.groups.all.0 }} <br>
-                                <b>Dernière connection</b> : {{ user.last_login }}
+                                <b>Dernière connexion</b> : {{ user.last_login }}
                             </div>
                         </div>
                     </div>
@@ -61,10 +61,10 @@
                                         <div class="tab-content" id="nav-tabContent">
                                             <div class="tab-pane fade show active" id="list-home" role="tabpanel"
                                                  aria-labelledby="list-home-list">
-                                                Vous avez accès aux machines virtuel sur le <span
+                                                Vous avez accès aux machines virtuelles sur le <span
                                                     style="font-weight: bold">VLAN 2</span>, <span
                                                     style="font-weight: bold">VLAN1.</span> <br>
-                                                Vous avez reçu les iditenfiants sur votre boite mail personnelle.
+                                                Vous avez reçu les identifiants sur votre boite mail personnelle.
                                             </div>
                                             <div class="tab-pane fade" id="list-profile" role="tabpanel"
                                                  aria-labelledby="list-profile-list">
@@ -92,6 +92,11 @@
                                                      aria-labelledby="list-settings-list">
                                                     Vous pouvez modifier les infomations, créer ou supprimer tous les
                                                     informations liées aux utilisateurs de l'entreprise.
+                                                    <br> <br>
+                                                    <button onclick="location.href = '/home/adduser';" type="button"
+                                                            class="btn btn-primary">Ajouter un utilisateur
+                                                    </button>
+
                                                 </div>
                                             {% endif %}
                                         </div>
@@ -120,6 +125,7 @@
                                                 <option>Antoine Branson</option>
                                                 <option>Florin Gogibus</option>
                                                 <option>Quentin Cucci</option>
+                                                <option>Robin Chatelet</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6">
@@ -156,6 +162,7 @@
                                                 <option>Antoine Branson</option>
                                                 <option>Florin Gogibus</option>
                                                 <option>Quentin Cucci</option>
+                                                <option>Robin Chatelet</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6">

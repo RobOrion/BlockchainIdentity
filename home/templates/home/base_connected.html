@@ -28,6 +28,9 @@
             <a href="{% url 'home:profile' %}" class="btn btn-light m-1">
                 <li class="text-light " style="font-size: 17px; color: black !important;">Profil</li>
             </a>
+            <a href="{% url 'home:demand' %}" class="btn btn-light m-1">
+                <li class="text-light " style="font-size: 17px; color: black !important;">Demande d'ajout <span class="badge badge-danger">{{ nbr_request }}</span> </li>
+            </a>
             <a href="{% url 'login:logout' %}" class="btn btn-light m-1">
                 <li class="text-light" style="font-size: 17px; color: black !important;">Se deconnecter</li>
             </a>
